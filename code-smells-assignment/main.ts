@@ -89,6 +89,7 @@
   //   return r / 7;
   // }
   
+// Mitt svar 
 
   class TemperatureRecord {
     constructor(
@@ -142,6 +143,7 @@
   //   parent.appendChild(container);
   // }
   
+  // Mitt svar 
 
   class Product {
     constructor (
@@ -239,6 +241,7 @@
   //   return result;
   // }
   
+  // Mitt svar 
 
 function concatenateStrings (): string {
   return ["Lorem", "ipsum", "dolor", "sit", "amet"].join(" ");
@@ -250,24 +253,60 @@ function concatenateStrings (): string {
       fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
       lösning som är hållbar och skalar bättre. 
   */
-  function createUser(
-    name: string,
-    birthday: Date,
-    email: string,
-    password: string
-  ) {
-    // Validation
+  // function createUser(
+  //   name: string,
+  //   birthday: Date,
+  //   email: string,
+  //   password: string
+  // ) {
+  //   // Validation
   
-    let ageDiff = Date.now() - birthday.getTime();
-    let ageDate = new Date(ageDiff);
-    let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+  //   let ageDiff = Date.now() - birthday.getTime();
+  //   let ageDate = new Date(ageDiff);
+  //   let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
   
-    console.log(userAge);
+  //   console.log(userAge);
   
-    if (!(userAge < 20)) {
-      // Logik för att skapa en användare
-    } else {
+  //   if (!(userAge < 20)) {
+  //     // Logik för att skapa en användare
+  //   } else {
+  //     return "Du är under 20 år";
+  //   }
+  // }
+  
+// Mitt svar 
+
+  interface User {
+    name: string; 
+    birthday: Date;
+    email: string;
+    password: string;
+    avatar?: string;
+    adress?: string;
+  }
+
+  function isAdult (birthday: Date, minAge: number = 20): boolean { 
+    const today = new Date ();
+    const birthDate = new Date(birthday); 
+    birthDate.setFullYear(birthDate.getFullYear() + minAge);
+    return birthDate <= today;
+  }
+
+  function validateUser (user: User): string | null {
+    if (!user.birthday || isNaN (user.birthday.getTime())) {
+      return "Ogiltigt Födelsedatum";
+    }
+    if (!isAdult(user.birthday)) {
       return "Du är under 20 år";
     }
+    return null;
   }
-  
+
+
+  function createUser (user: User): string {
+  const validationError = validateUser(user);
+  if (validationError) {
+    return validationError;
+  }
+  return `Anändare skapad: ${user.name}`;
+  }
